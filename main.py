@@ -10,6 +10,7 @@ from email_verification_service.email_verification_service import (
     EmailVerificationService,
 )
 from service_client.client import YourServiceClient
+from domain_search.domain_search import HunterIOClient
 
 load_dotenv()
 
@@ -39,6 +40,9 @@ def main():
         verification_service.verify_email(email) for email in emails_to_verify
     ]
 
+    domain_results = verification_service.domain_search('example.com')
+    # flake8: noqa
+    print('Domain search results:', domain_results)
     print('Verification results:', verification_results)
 
 

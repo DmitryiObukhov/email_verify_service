@@ -1,6 +1,8 @@
 """Module providing email verification functionality."""
 from typing import Any, Dict, List
 
+from domain_search.domain_search import HunterIOClient
+
 
 class EmailVerificationClient(object):
     """Client for email verification."""
@@ -12,6 +14,10 @@ class EmailVerificationClient(object):
     def verify_email(self, email: str) -> Dict[str, Any]:
         """Verify the given email using the client."""
         return self.client.verify_email(email)
+
+    def domain_search(self, domain: str) -> Dict[str, Any]:
+        """Search for information related to the given domain using the client."""
+        return self.client.domain_search(domain)
 
 
 class EmailVerificationResultManager(object):
@@ -52,6 +58,11 @@ class EmailVerificationService(object):
         """Verify the given email and store the result."""
         verification_result: Dict[str, Any] = self.client.verify_email(email)
         self.result_manager.create_result(verification_result)
+
+    def domain_search(self, domain: str) -> None:
+        """Search for information related to the given domain and store the result."""
+        domain_result: Dict[str, Any] = self.client.domain_search(domain)
+        self.result_manager.create_result(domain_result)
 
     def get_results(self) -> List[Dict[str, Any]]:
         """Get and return the list of verification results."""

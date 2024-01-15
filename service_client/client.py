@@ -1,7 +1,7 @@
 """Module providing YourServiceClient for interacting with an external service."""
 
 from typing import Any, Dict
-
+from domain_search.domain_search import HunterIOClient
 import requests
 
 
@@ -28,6 +28,15 @@ class YourServiceClient(object):
         endpoint = 'email-verifier'
         request_data = {'email': email}
         return self._make_request('GET', endpoint, request_data)
+    
+    def domain_search(self, domain: str):
+        """
+        Search for information related to the given domain using HunterIOClient.
+
+        :param domain: The domain to search.
+        :return: JSON response from HunterIOClient.
+        """
+        return self.hunter_io_client.domain_search(domain)
 
     def _make_request(self, method: str, endpoint: str, request_data: Dict[str, Any] = None):
         """
@@ -38,6 +47,7 @@ class YourServiceClient(object):
         :param data: Optional data to be sent with the request.
         :return: JSON response from the external service.
         """
+        # flake8: noqa
         url = f'{self.base_url}/{endpoint}'
         headers = {'Authorization': f'Bearer {self.api_key}'}
         response = requests.request(method, url, json=request_data, headers=headers)

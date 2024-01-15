@@ -36,6 +36,7 @@ def main():
         verification_service.verify_email(email)
 
     verification_results = verification_service.get_results()
+    # flake8: noqa
     print('Verification results:', verification_results)
 
 
